@@ -21,11 +21,6 @@ async function createRequest(model, taskId, requesterId, requesterName) {
         if (task.user_id.toString() === requesterId.toString())
             return { status: 403, message: "You cannot send a request for your own task" };
 
-        const requestExists = await Requests.findOne({ task_id: taskId, requester_id: requesterId });
-        if (requestExists)
-            return { status: 409, message: "You have already sent a request for this task" };
-
-
         const newRequest = new Requests({
             task_id: taskId,
             requester_id: requesterId,
